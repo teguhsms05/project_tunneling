@@ -1,0 +1,162 @@
+{% extends "account/based.html" %}
+
+{% block content %}
+{% load widget_tweaks %}
+<div class="h-100 no-gutters row">
+    <div id="carouselExampleControls2" class="d-none d-lg-block col-lg-4 carousel slide carousel-fade"
+        data-ride="carousel">
+
+        <div class="slider-light">
+            <div class="slick-slider">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="position-relative h-100 d-flex justify-content-center align-items-center bg-plum-plate"
+                            tabindex="-1">
+                            <div class="slide-img-bg city"></div>
+                            <div class="slider-content">
+                                <h3>Perfect Balance</h3>
+                                <p>ArchitectUI is like a dream. Some think it's too good to be true!
+                                    Extensive
+                                    collection of unified React Boostrap Components and Elements.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="position-relative h-100 d-flex justify-content-center align-items-center bg-premium-dark"
+                            tabindex="-1">
+                            <div class="slide-img-bg citynights"></div>
+                            <div class="slider-content">
+                                <h3>Scalable, Modular, Consistent</h3>
+                                <p>Easily exclude the components you don't require. Lightweight,
+                                    consistent
+                                    Bootstrap based styles across all elements and components
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="position-relative h-100 d-flex justify-content-center align-items-center bg-sunny-morning"
+                            tabindex="-1">
+                            <div class="slide-img-bg citydark"></div>
+                            <div class="slider-content">
+                                <h3>Complex, but lightweight</h3>
+                                <p>We've included a lot of components that cover almost all use cases
+                                    for any type of application.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="h-100 d-flex bg-white justify-content-center align-items-center col-md-12 col-lg-8">
+        <div class="mx-auto app-login-box col-sm-12 col-md-10 col-lg-9">
+            <div class="app-logo"></div>
+            <h4 class="mb-0">
+                <span class="d-block">Welcome back,</span>
+                <span>Please sign in to your account.</span>
+            </h4>
+            <h6 class="mt-3">No account? <a href="{% url 'account:signup' %}" class="text-primary">Sign
+                    up
+                    now</a></h6>
+            <div class="divider row"></div>
+            <div>
+                <form class="" method="POST" id="signupForm">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <!-- {% for field in form.visible_fields %}
+                                        <div class="col-md-6">
+                                            <div class="position-relative form-group">
+                                                <label>{{ field.label }}</label>
+                                                <div>
+                                                    {% render_field field placeholder=field.label class="form-control" %}
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        {% endfor %} -->
+                        <div class="col-md-6">
+                            <div class="position-relative form-group">
+                                <label class="">{{ form.username.label }}</label>
+                                {% render_field form.username class="form-control" %}
+                                <!-- <input type="text" name="firstname" id="firstname" placeholder="Username here..."
+                                                    class="form-control" /> -->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="position-relative form-group">
+                                <label class="">{{ form.password1.label }}</label>
+                                {% render_field form.password1 class="form-control" %}
+                                <!-- <input name="password" id="examplePassword"
+                                                    placeholder="Password here..." type="password" class="form-control"> -->
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="position-relative form-check">
+                        <input name="check" id="exampleCheck" type="checkbox" class="form-check-input">
+                        <label for="exampleCheck" class="form-check-label">Keep me logged in</label>
+                    </div>
+                    <div class="divider row"></div>
+                    <div class="d-flex align-items-center">
+                        <div class="ml-auto">
+                            <!-- <a href="javascript:void(0);" class="btn-lg btn btn-link">Recover
+                                Password</a> -->
+                            <button class="btn btn-primary btn-lg" type="submit">Login to
+                                Dashboard</button>
+                            
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div id="toast-container" class="toast-top-right" hidden>
+                                        <div class="toast toast-error" aria-live="assertive" >
+                                            <div class="toast-message">{{message}}</div>
+                                        </div>
+                                    </div>
+                                    {% if message.tags == 'error' %}
+                                    <script>
+                                        toasty();
+                                    </script>
+                                    {% endif %}
+                                {% endfor %}
+                                
+                            {% endif %}
+                            
+                            <!-- <div id="toastNotice" class="toast" style="position: absolute; bottom: 5px; right: 2px;">
+                                <div class="toast-header">
+                                    <strong class="mr-auto">Join now</strong>
+                                    <small>13 mins ago</small>
+                                    <button type="button" class="btn ml-2 mb-2 close" data-dismiss="toast">
+                                        <span>&times;</span>
+                                    </button>
+                                </div>
+                                <div class="toast-body">
+                                    Hello world, i am toast message
+                                </div>
+                            </div> -->
+                            <!-- <div id="toast-container" class="toast-top-right">
+                                <div class="toast toast-error" aria-live="assertive" style="opacity: 0.1332;">
+                                    <div class="toast-message">I do not think that means what you think it means.</div>
+                                </div>
+                                
+                            </div> -->
+                        </div>
+                        <!-- <script>
+                            obj = document.getElementById("toasto");
+                            obj.onclick = function () {
+                                var myAlert = document.getElementById("toast-container");
+                                var bsAlert = new bootstrap.Toast(myAlert);
+                                bsAlert.show();
+                            }
+                        </script> -->
+                        
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,254 @@
+{% extends 'domregis/based.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block appheader %}
+<div class="app-header-right">
+    <div class="header-btn-lg pr-0">
+        <div class="widget-content p-0">
+            <div class="widget-content-wrapper">
+                <div class="widget-content-left">
+                    <div class="btn-group">
+                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                            <img width="42" class="rounded-circle" src="{% static 'images/avatars/1.jpg' %}" alt="">
+                            <!-- <img width="42" class="rounded-circle" src="../../assets/images/avatars/1.jpg" alt=""> -->
+                            <i class="fa fa-angle-down ml-2 opacity-8"></i>
+                        </a>
+                        <div tabindex="-1" role="menu" aria-hidden="true"
+                            class="rm-pointers dropdown-menu-lg dropdown-menu dropdown-menu-right">
+                            <div class="dropdown-menu-header">
+                                <div class="dropdown-menu-header-inner bg-info">
+                                    <div class="menu-header-image opacity-2 city"></div>
+                                    <div class="menu-header-content text-left">
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left mr-3">
+                                                    <img width="42" class="rounded-circle"
+                                                        src="{% static 'images/avatars/1.jpg' %}" alt="">
+                                                </div>
+                                                <div class="widget-content-left">
+                                                    {% if user.is_authenticated %}
+                                                    <div class="widget-heading">
+                                                        {{user.first_name|title}} {{user.last_name|title}}
+                                                    </div>
+                                                    {% endif %}
+                                                    <div class="widget-subheading opacity-8"></div>
+                                                </div>
+                                                <div class="widget-content-right mr-2">
+                                                    <a class="btn-pill btn-shadow btn-shine btn btn-focus"
+                                                        href="{% url 'account:signout' %}">Logout</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+<div class="scrollbar-sidebar">
+    <div class="app-sidebar__inner">
+        <ul class="vertical-nav-menu">
+            <li class="app-sidebar__heading">Menu</li>
+            <li>
+                <a href="#">
+                    <i class="metismenu-icon pe-7s-rocket"></i>Dashboardos
+                </a>
+                <ul>
+
+                </ul>
+            </li>
+            <li class="mm-active">
+                <a href="#">
+                    <i class="metismenu-icon pe-7s-browser"></i>Pages
+                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                </a>
+                <ul>
+                    <li>
+                        <a href="{% url 'domregis:register_dom' %}" class="mm-active">
+                            <i class="metismenu-icon"></i>Register Domain
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'domregis:register_cpanel' %}">
+                            <i class="metismenu-icon"></i>Register Cpanel
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'account:signup' %}">
+                            <i class="metismenu-icon"></i> Signup
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="app-main__outer">
+    <div class="app-main__inner">
+        <div class="col-12">
+            <div class="toast text-white bg-danger toast-top-right" id="EpicToast" role="alert" aria-live="assertive"
+                aria-atomic="true" style="position: absolute;">
+                {% if messaValidatges %}
+                <script>
+                    toasty;
+                </script>
+                {% endif %}
+            </div>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class=" {{message.tags}} {{message}}">
+                    </div>
+                    {% if message.tags == "success" %}
+                    <div id={{message}} ></div>
+                    <script>
+                        window.addEventListener('load', (event) => {
+                            document.getElementById('successo').click();
+                        });
+                    </script>
+                    {% elif message.tags == "error" %}
+                    <div id={{message}} ></div>
+                    <script>
+                        window.addEventListener('load', (event) => {
+                            document.getElementById('deleto').click();
+                        });
+                    </script>
+                    {% else  %}
+                    <div id={{message}} ></div>
+                    <script>
+                        window.addEventListener('load', (event) => {
+                            document.getElementById('duplicato').click();
+                        });
+                    </script>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="app-page-title">
+            <div class="page-title-wrapper">
+                <div class="page-title-heading">
+                    <div class="page-title-icon">
+                        <i class="lnr-picture text-danger"></i>
+                    </div>
+
+                    <div>Form Entry SubDomain
+                        <div class="page-title-subheading">Avoid duplicate sub-domain</div>
+                        
+                    </div>
+
+                    <div class="invisible">
+                        <button id="duplicato" type="button" class="btn btn-primary btn-show-swal-warning">Show
+                            Alert</button>
+                        <button id="successo" type="button" class="btn btn-primary btn-show-swal-success">Show
+                            Alert</button>
+                        <button id="deleto" type="button" class="btn btn-primary btn-show-swal-deleto">Show
+                            Alert</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+
+                <h5 class="card-title">Form Entry Sub-Domain</h5>
+                <form id="signupForm" class="col-md-10 mx-auto" method="post">
+                    {% csrf_token %}
+                    <!-- {% for field in form.visible_fields %}
+                    <div class="form-group">                       
+                        <label>{{ field.label }}</label>
+                        {% if subdom %}
+                            <div>
+                                {% render_field field placeholder="Sub-Domain" class="form-control" value=subdom %}
+                            </div>
+                        {% else %}
+                            <div>
+                                {% render_field field placeholder="Sub-Domain" class="form-control" %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %} -->
+                    <div class="form-group">
+                        <label>{{ form.sub_domain.label }}</label>
+                        {% render_field form.sub_domain class="form-control" %} 
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form.group_domain.label }}</label>
+                        <div>
+                            <select name="group_domain" class="multiselect-dropdown form-control ">
+                                <option selected disabled="true">-- Select Group Domain --</option>
+                                {% for result in cpanel %}
+                                    <option value="{{ result.group_domain }}">{{ result.group_domain }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" name="register" value="Register">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Sub Domain</th>
+                            <th>Group Domain</th>
+                            <th width="20%">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for dom in domain %}
+                        <tr>
+                            <td>{{dom.sub_domain}}</td>
+                            <td>{{dom.group_domain}}</td>
+                            <td style="text-align:center">
+                                <a href="{% url 'domregis:delete_dom' dom.id %}" id={{dom.id}} class="mr-2 btn-icon btn btn-outline-danger pe-7s-trash " ></a>
+                                
+                                <!-- <button class="mr-2 btn-icon btn-icon-only btn btn-outline-danger">
+                                    <a class="pe-7s-trash btn-icon-wrapper"> </a>
+                                </button> -->
+                                
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Sub Domain</th>
+                            <th>Group Domain</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="app-wrapper-footer">
+        <div class="app-footer">
+            <div class="app-footer__inner">
+                <div class="app-footer-left">
+                    <div class="footer-dots">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

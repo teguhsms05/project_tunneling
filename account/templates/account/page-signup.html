@@ -1,0 +1,129 @@
+{% extends "account/based.html" %}
+    {% block content %}
+        {% load widget_tweaks %}
+                <div class="h-100 no-gutters row">
+                    <div
+                        class="h-100 d-md-flex d-sm-block bg-white justify-content-center align-items-center col-md-12 col-lg-7">
+                        <div class="mx-auto app-login-box col-sm-12 col-md-10 col-lg-9">
+                            <div class="app-logo"></div>
+                            <h4>
+                                <div>Welcome,</div>
+                                <span>It only takes a <span class="text-success">few seconds</span> to create your
+                                    account</span>
+                            </h4>
+                            <div>
+                                <form class="" method="POST" id="signupForm">
+                                    {% csrf_token %}
+                                    <div class="form-row">
+                                        {% for field in form.visible_fields %}
+                                        <div class="col-md-6">
+                                            <div class="position-relative form-group">
+                                                <label class="" for="{{ field.id_for_label }}"><span
+                                                        class="text-danger">*</span> {{ field.label }}</label>
+                                                {% render_field field placeholder=field.label class="form-control" %}
+                                                <!-- <input name="email" id="exampleEmail" placeholder="Email here..." type="email" class="form-control"> -->
+                                            </div>
+                                            {% for error in field.errors %}
+                                            <small style="color: red">{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+
+                                    <div class="mt-3 position-relative form-check">
+
+                                        <input type="checkbox" id="agree" name="agree" value="agree" class="form-check-input" />
+                                        <label for="exampleCheck" class="form-check-label">Accept our <a
+                                                href="javascript:void(0);">Terms and Conditions</a>.</label>
+                                    </div>
+                                    <!-- <div class="form-group">
+                                        <div>
+                                            <div class="form-check">
+                                                <input type="checkbox" id="agree" name="agree" value="agree" class="form-check-input" />
+                                                <label class="form-check-label">Please agree to our policy</label>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="mt-4 d-flex align-items-center">
+                                        <h5 class="mb-0">Already have an account? <a href="{% url 'account:signin' %}"
+                                                class="text-primary">Sign in</a></h5>
+                                        <div class="ml-auto">
+                                            <button
+                                                class="btn-wide btn-pill btn-shadow btn-hover-shine btn btn-primary btn-lg">Create
+                                                Account </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="d-lg-flex d-xs-none col-lg-5">
+                        <div class="slider-light">
+                            <div class="slick-slider slick-initialized">
+                                <div>
+                                    <div class="position-relative h-100 d-flex justify-content-center align-items-center bg-premium-dark"
+                                        tabindex="-1">
+                                        <div class="slide-img-bg"
+                                            style="background-image: url('../static/images/originals/citynights.jpg');"></div>
+                                        <div class="slider-content">
+                                            <h3>Scalable, Modular, Consistent</h3>
+                                            <p>Easily exclude the components you don't require. Lightweight, consistent
+                                                Bootstrap based styles across all elements and components
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div id="carouselExampleControls1" class="d-none d-lg-block col-lg-5 carousel slide"
+                        data-ride="carousel">
+
+                        <div class="slider-light">
+                            <div class="slick-slider">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div class="position-relative h-100 d-flex justify-content-center align-items-center bg-plum-plate"
+                                            tabindex="-1">
+                                            <div class="slide-img-bg city"></div>
+                                            <div class="slider-content">
+                                                <h3>Perfect Balance</h3>
+                                                <p>ArchitectUI is like a dream. Some think it's too good to be true!
+                                                    Extensive
+                                                    collection of unified React Boostrap Components and Elements.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="position-relative h-100 d-flex justify-content-center align-items-center bg-premium-dark"
+                                            tabindex="-1">
+                                            <div class="slide-img-bg citynights"></div>
+                                            <div class="slider-content">
+                                                <h3>Scalable, Modular, Consistent</h3>
+                                                <p>Easily exclude the components you don't require. Lightweight,
+                                                    consistent
+                                                    Bootstrap based styles across all elements and components
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="position-relative h-100 d-flex justify-content-center align-items-center bg-sunny-morning"
+                                            tabindex="-1">
+                                            <div class="slide-img-bg citydark"></div>
+                                            <div class="slider-content">
+                                                <h3>Complex, but lightweight</h3>
+                                                <p>We've included a lot of components that cover almost all use cases
+                                                    for any type of application.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+    {% endblock %}
+            
